@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Jobs;
 using Unity.Rendering;
-using Unity.Transforms;
 public class ChangeColorSystem : SystemBase
 {
     private Unity.Mathematics.Random random;
