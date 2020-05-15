@@ -14,6 +14,8 @@ public class SimulationHandler : MonoBehaviour
     // Learned: Never put a script on an entity. If you do the Start and Update method never get executed
     [SerializeField] private int numberOfCubes; // think this is suppose to be hold by the struct cube
     [SerializeField] private GameObject cubePrefab; // think this is suppose to be hold by the struct cube
+    [SerializeField] public List<UnityEngine.Material> cubeMaterial = new List<UnityEngine.Material>();
+    [SerializeField] public Mesh cubeMesh;
     private Entity cubeEntityPrefab; // think this is suppose to be hold by the struct cube
 
     private BlobAssetStore blobAssetStore;
@@ -83,6 +85,12 @@ public class SimulationHandler : MonoBehaviour
         {
             Value = new float4(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)) 
         });*/
+        entityManager.SetSharedComponentData(newCubeEntity, new RenderMesh 
+        {
+            material = cubeMaterial[(int)UnityEngine.Random.Range(0, 10)],
+            mesh = cubeMesh
+        });
+        entityManager.AddComponentData(newCubeEntity, new Cube());
     } 
 
     
