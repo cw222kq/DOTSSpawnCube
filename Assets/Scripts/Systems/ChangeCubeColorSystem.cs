@@ -2,7 +2,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Rendering;
-public class ChangeColorSystem : SystemBase
+public class ChangeCubeColorSystem : SystemBase
 {
     private Unity.Mathematics.Random random;
  
