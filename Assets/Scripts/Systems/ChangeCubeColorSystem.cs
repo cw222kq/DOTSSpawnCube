@@ -14,14 +14,19 @@ public class ChangeCubeColorSystem : SystemBase
     {
        Entities.ForEach((RenderMesh renderMesh, ref CubeColor color) => 
         {
-            color.r = random.NextFloat(0f, 1f);
-            color.g = random.NextFloat(0f, 1f);
-            color.b = random.NextFloat(0f, 1f);
-
-            renderMesh.material.color = new Color(color.r, color.g, color.b);
+            ChangeColors(renderMesh, color);
 
         }).WithoutBurst().Run();
 
+    }
+
+    private void ChangeColors(RenderMesh renderMesh, CubeColor color) 
+    {
+        color.r = random.NextFloat(0f, 1f);
+        color.g = random.NextFloat(0f, 1f);
+        color.b = random.NextFloat(0f, 1f);
+
+        renderMesh.material.color = new Color(color.r, color.g, color.b);
     }
     
 }
