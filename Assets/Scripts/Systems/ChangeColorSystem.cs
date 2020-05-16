@@ -12,9 +12,13 @@ public class ChangeColorSystem : SystemBase
     }
     protected override void OnUpdate()
     {
-       Entities.ForEach((RenderMesh renderMesh, Cube cube) => 
+       Entities.ForEach((RenderMesh renderMesh, ref CubeColor color) => 
         {
-            renderMesh.material.color = new Color(random.NextFloat(0f, 1f),random.NextFloat(0f, 1f),random.NextFloat(0f, 1f));
+            color.r = random.NextFloat(0f, 1f);
+            color.g = random.NextFloat(0f, 1f);
+            color.b = random.NextFloat(0f, 1f);
+
+            renderMesh.material.color = new Color(color.r, color.g, color.b);
 
         }).WithoutBurst().Run();
 

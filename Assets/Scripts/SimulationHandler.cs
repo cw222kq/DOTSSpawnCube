@@ -91,6 +91,7 @@ public class SimulationHandler : MonoBehaviour
             mesh = cubeMesh
         });
         entityManager.AddComponentData(newCubeEntity, new Cube());
+        entityManager.AddComponentData(newCubeEntity, new CubeColor());
     } 
 
     
