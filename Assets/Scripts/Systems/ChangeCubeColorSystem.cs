@@ -2,6 +2,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Rendering;
+/*[UpdateBefore(typeof(ExplodeCubeSystem))]
 public class ChangeCubeColorSystem : SystemBase
 {
     private Unity.Mathematics.Random random;
@@ -14,7 +15,7 @@ public class ChangeCubeColorSystem : SystemBase
     {
        Entities.ForEach((RenderMesh renderMesh, ref CubeColor color) => 
         {
-            ChangeColors(renderMesh, color);
+            //ChangeColors(renderMesh, color);
 
         }).WithoutBurst().Run();
 
@@ -29,4 +30,4 @@ public class ChangeCubeColorSystem : SystemBase
         renderMesh.material.color = new Color(color.r, color.g, color.b);
     }
     
-}
+}*/

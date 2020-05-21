@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Entities;
-
+[GenerateAuthoringComponent]
 public struct CubeColor : IComponentData
 {
     public float r;
