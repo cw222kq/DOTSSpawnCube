@@ -150,7 +150,7 @@ public class SimulationHandler : MonoBehaviour
         });
 
         // Adding my own structs to the entity
-        entityManager.AddComponentData(newSphereEntity, new Explosion());
+        //entityManager.AddComponentData(newSphereEntity, new Explosion());
         
     } 
 

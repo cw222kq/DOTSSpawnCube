@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
-/*
+/* OLD
 [AlwaysSynchronizeSystem] 
 public class SpawnCubeSystem : JobComponentSystem
 {

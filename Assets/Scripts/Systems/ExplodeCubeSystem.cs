@@ -18,14 +18,40 @@ public class ExplodeCubeSystem : SystemBase
     //private EntityManager entityManager;
     private Entity sphere;
     private Explosion explosion; // Works if setting the value first but does not work if getting the entity from explosion. The entity from explosion is null (?)
+    
+    // THIS WORKS TOGETHER WITH EXPLOSION AND EXPLOSIONAUTHORING
+    //BeginInitializationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+
+    BeginInitializationEntityCommandBufferSystem BufferSystem;
+
+    EntityCommandBuffer Buffer;
+
+    //EntityCommandBuffer ecb;
+    
     protected override void OnCreate() 
     {   
         //Debug.Log("in OnUpdate");
         countdown = deelay;
         //entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+        // THIS WORKS TOGETHER WITH EXPLOSION AND EXPLOSIONAUTHORING
+        //m_EntityCommandBufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>(); //WORKS WITH WORKER THREADS
+
+
+        //ecb = new EntityCommandBuffer();
+
+        BufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
+        //Buffer = BufferSystem.CreateCommandBuffer();
+        
+
     } 
     protected override void OnUpdate() 
     {
+        // THIS WORKS TOGETHER WITH EXPLOSION AND EXPLOSIONAUTHORING
+        //EntityCommandBuffer.Concurrent commandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(); //WORKS WITH WORKER THREADS
+        Buffer = BufferSystem.CreateCommandBuffer();
+        
+
         //Debug.Log("in OnUpdate");
         if(!hasExplode) 
         {
@@ -36,15 +62,16 @@ public class ExplodeCubeSystem : SystemBase
             Debug.Log("execute explode");
             //Entities.ForEach((PhysicsCollider collider, ref Explosion explosion) => 
             //{
-                Explode();
+                //Explode(ecb);
+                //Explode(commandBuffer);
+                Explode(Buffer);
 
           //  }).WithoutBurst().Run();
         }
         
-
     }
 
-    private void Explode()
+    private void Explode(EntityCommandBuffer ecb)
     {   
         // Get reference to system and disable it
         //World.DefaultGameObjectInjectionWorld.GetExistingSystem<ChangeCubeColorSystem>().Enabled = false; makes unity and computer crash???!!!!
@@ -53,11 +80,13 @@ public class ExplodeCubeSystem : SystemBase
         //Explosion explosion = World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentdata<Explosion>();
         //Explosion explosion = World.DefaultGameObjectInjectionWorld.GetComponentDataFromEntity<Explosion>();
 
-        SimulationHandler.instance.SpawnSphere(0, 2, 2);
+        
+        // Instanciate a sphere from monobehaviour class SimulationHandler
+        //SimulationHandler.instance.SpawnSphere(0, 2, 2);
         //explosion.power = 110f;
-        Debug.Log("explosion power " + explosion.power);
-        Debug.Log("explosion power " + explosion.sphere);
-        Debug.Log("BOOM");
+        //Debug.Log("explosion power " + explosion.power);
+        //Debug.Log("explosion power " + explosion.sphere);
+        //Debug.Log("BOOM");
         hasExplode = true;
 
         // Get highest x-value and highest y-value
@@ -65,7 +94,77 @@ public class ExplodeCubeSystem : SystemBase
         Debug.Log("Width: " + SimulationHandler.instance.GetMaxWidth());
         
         // 1. Spawn a sphere entity
+        Entities
+            .WithoutBurst()
+            .WithAll<SpawnerTag>()
+            .WithStructuralChanges()
+            .ForEach((Entity entity, int entityInQueryIndex, ref Explosion spawnerFromEntity, in LocalToWorld location) =>
+        {
+            // with EntityManager
+            //var TheInstance = EntityManager.Instantiate(spawnerFromEntity.Prefab);
+            //EntityManager.SetComponentData(TheInstance, new Translation {Value = new float3(0, 0, 2)});
+            // Removes the spawner entity
+            //EntityManager.DestroyEntity(entity);
+            Debug.Log("This should only be printed out once");
+            var theInstance = ecb.Instantiate(spawnerFromEntity.Prefab);
+            ecb.SetComponent(theInstance, new Translation {Value = new float3(0, 0, 2)});
+            ecb.DestroyEntity(entity);
+
+        }).Run(); 
+
+    }
+
+    // WORKS BUT WANT IT TO RUN ON THE MAIN THREAD INSTEAD OF A WORKER THREAD. Main thread results in error message: 
+   // InvalidOperationException: EntityCommandBuffer.Concurrent must only be used in a Job
+   /* private void Explode(EntityCommandBuffer.Concurrent commandBuffer)
+    {   
+        // Get reference to system and disable it
+        //World.DefaultGameObjectInjectionWorld.GetExistingSystem<ChangeCubeColorSystem>().Enabled = false; makes unity and computer crash???!!!!
+        // Get reference to componentData ?????
+        // World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentdata<Explosion>().sphere;
+        //Explosion explosion = World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentdata<Explosion>();
+        //Explosion explosion = World.DefaultGameObjectInjectionWorld.GetComponentDataFromEntity<Explosion>();
+
+        
+        // Instanciate a sphere from monobehaviour class SimulationHandler
         //SimulationHandler.instance.SpawnSphere(0, 2, 2);
+        //explosion.power = 110f;
+        //Debug.Log("explosion power " + explosion.power);
+        //Debug.Log("explosion power " + explosion.sphere);
+        //Debug.Log("BOOM");
+        hasExplode = true;
+
+        // Get highest x-value and highest y-value
+        Debug.Log("Deep: " + SimulationHandler.instance.GetMaxDeep());
+        Debug.Log("Width: " + SimulationHandler.instance.GetMaxWidth());
+        
+        // 1. Spawn a sphere entity
+        Entities
+            .WithoutBurst()
+            .ForEach((Entity entity, int entityInQueryIndex, in Explosion spawnerFromEntity, in LocalToWorld location) =>
+        {
+        
+            var TheInstance = commandBuffer.Instantiate(entityInQueryIndex, spawnerFromEntity.Prefab);
+            commandBuffer.SetComponent(entityInQueryIndex, TheInstance, new Translation {Value = new float3(0, 0, 2)});
+            commandBuffer.DestroyEntity(entityInQueryIndex, entity);
+
+        }).ScheduleParallel(); 
+
+        m_EntityCommandBufferSystem.AddJobHandleForProducer(Dependency); 
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
         
         /*Entity explosionEntity = EntityManager.Instantiate(SimulationHandler.instance.sphereEntityPrefab);
         EntityManager.AddComponentData(explosionEntity, new Translation 
@@ -96,11 +195,13 @@ public class ExplodeCubeSystem : SystemBase
         //Debug.Log("Width: " + SimulationHandler.main.GetMaxWidth());
         
         
-        /*Entities.ForEach((PhysicsCollider collider, ref Explosion explosion) => 
+        /*Entities
+            .WithoutBurst()
+            .ForEach((PhysicsCollider collider, ref Explosion explosion) => 
         {
             
 
-        }).WithoutBurst().Run();*/
+        }).Run();*/
 
         // Calculate the middle of the structure of cubes
 
@@ -117,5 +218,5 @@ public class ExplodeCubeSystem : SystemBase
 
 
         // Remove the sphere entity
-    }
+  //  }  
 }
