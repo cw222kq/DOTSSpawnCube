@@ -130,7 +130,7 @@ public class SimulationHandler : MonoBehaviour
         // Adding my own structs to the entity
         entityManager.AddComponentData(newCubeEntity, new Cube());
         entityManager.AddComponentData(newCubeEntity, new CubeColor());
-        entityManager.AddComponentData(newCubeEntity, new Explosion());
+        //entityManager.AddComponentData(newCubeEntity, new Explosion());
         
     } 
 

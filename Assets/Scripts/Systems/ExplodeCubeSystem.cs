@@ -97,8 +97,7 @@ public class ExplodeCubeSystem : SystemBase
         Entities
             .WithoutBurst()
             .WithAll<SpawnerTag>()
-            .WithStructuralChanges()
-            .ForEach((Entity entity, int entityInQueryIndex, ref Explosion spawnerFromEntity, in LocalToWorld location) =>
+            .ForEach((Entity entity, int entityInQueryIndex, in Explosion explosion) =>
         {
             // with EntityManager
             //var TheInstance = EntityManager.Instantiate(spawnerFromEntity.Prefab);
@@ -106,9 +105,18 @@ public class ExplodeCubeSystem : SystemBase
             // Removes the spawner entity
             //EntityManager.DestroyEntity(entity);
             Debug.Log("This should only be printed out once");
-            var theInstance = ecb.Instantiate(spawnerFromEntity.Prefab);
+            var theInstance = ecb.Instantiate(explosion.Prefab);
             ecb.SetComponent(theInstance, new Translation {Value = new float3(0, 0, 2)});
-            ecb.DestroyEntity(entity);
+            ecb.AddComponent(theInstance, new ExplodeTag());
+            //ecb.DestroyEntity(entity);
+
+            /*
+            Entities
+                .WithoutBurst()
+                .WithAll<ExplodeTag>()
+                .ForEach((Entity entity, int entityInQueryIndex, ref Explosion spawnerFromEntity, in LocalToWorld location ) => {
+
+            });*/
 
         }).Run(); 
 
