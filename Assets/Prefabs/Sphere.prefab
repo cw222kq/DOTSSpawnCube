@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 2956613793160487044}
   - component: {fileID: 2173805253780644432}
   - component: {fileID: 224198305187438092}
-  - component: {fileID: 8813658986832768670}
   - component: {fileID: 1631530471315383953}
-  - component: {fileID: 2827623003793813420}
+  - component: {fileID: 543178016208018432}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &8813658986832768670
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071556487650657975}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1631530471315383953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShapeType: 0
+  m_ShapeType: 2
   m_PrimitiveCenter:
     x: 0
     y: 0
@@ -137,7 +123,7 @@ MonoBehaviour:
     m_SimplificationTolerance: 0.015
     m_BevelRadius: 0.05
     m_MinimumAngle: 2.5000002
-  m_CustomMesh: {fileID: 0}
+  m_CustomMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   m_ForceUnique: 0
   m_Material:
     m_SupportsTemplate: 1
@@ -168,7 +154,7 @@ MonoBehaviour:
       m_Override: 0
       m_Value: 0000000000000000
   m_ConvexRadius_Deprecated: -1
---- !u!114 &2827623003793813420
+--- !u!114 &543178016208018432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MotionType: 0
-  m_Mass: 1
+  m_Mass: 10000
   m_LinearDamping: 0.01
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:

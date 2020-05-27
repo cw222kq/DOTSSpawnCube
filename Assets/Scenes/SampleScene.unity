@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4e8506d5d548699b81cd435d9006ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfCubes: 1
+  numberOfCubes: 500
   cubePrefab: {fileID: 1142556543141956094, guid: 2c3958628186df314a338958c440043d,
     type: 3}
   cubeMaterial:
@@ -276,9 +276,9 @@ MonoBehaviour:
   cubeMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   sphereMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   sphereMaterial: {fileID: 2100000, guid: dbdf86f68b768bb43ad0d953c6d03e49, type: 2}
-  width: 0
-  deep: 0
-  height: 0
+  width: 10
+  deep: 10
+  height: 10
   spherePrefab: {fileID: 2071556487650657975, guid: 3f1d00ceb4886bfd9b8b854d92b7350f,
     type: 3}
 --- !u!114 &565054757

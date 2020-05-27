@@ -27,6 +27,11 @@ public class ExplosionAuthoring : MonoBehaviour, IDeclareReferencedPrefabs, ICon
             radius = radius,
             upforce = upforce
         };
+
+        var sphereCollider = new Unity.Physics.SphereCollider();
+        Debug.Log(Prefab);
+        Debug.Log(spawnerData.Prefab);
         dstManager.AddComponentData(entity, spawnerData);
+        //dstManager.AddComponentData(entity, sphereCollider);
     }
 }

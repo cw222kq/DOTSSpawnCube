@@ -5,6 +5,7 @@ using Unity.Rendering;
 using Unity.Physics;
 using Unity.Jobs;
 using Unity.Transforms;
+using SphereCollider = Unity.Physics.SphereCollider;
 //using Unity.Physics.Systems;
 
 [UpdateAfter(typeof(SimulationHandler))]
@@ -16,6 +17,9 @@ public class ExplodeCubeSystem : SystemBase
     //[Inject] private ChangeCubeColorSystem changeCubeColorSystem;
     //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
     //private EntityManager entityManager;
+    private float y = 0;
+    private float physicsValue = 0.8f;
+    private bool hasSphere;
     private Entity sphere;
     private Explosion explosion; // Works if setting the value first but does not work if getting the entity from explosion. The entity from explosion is null (?)
     
@@ -59,85 +63,83 @@ public class ExplodeCubeSystem : SystemBase
         }
         if(countdown <= 0f && !hasExplode) 
         {
-            Debug.Log("execute explode");
+            //Debug.Log("execute explode");
             //Entities.ForEach((PhysicsCollider collider, ref Explosion explosion) => 
             //{
-                //Explode(ecb);
-                //Explode(commandBuffer);
+                
                 Explode(Buffer);
-
+                
+        
+                
           //  }).WithoutBurst().Run();
         }
+        /*if(hasExplode) {
+
+            Entities
+                .WithoutBurst()
+                .WithAll<ExplodeTag>()
+                .ForEach((Entity entity, ref Translation translation) => 
+            {
+                translation.Value = new float3(5, 5, 5); 
+                
+
+            }).Run();
+
+
+
+        }*/
+
+        
         
     }
 
     private void Explode(EntityCommandBuffer ecb)
     {   
+
         // Get reference to system and disable it
         //World.DefaultGameObjectInjectionWorld.GetExistingSystem<ChangeCubeColorSystem>().Enabled = false; makes unity and computer crash???!!!!
         // Get reference to componentData ?????
         // World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentdata<Explosion>().sphere;
         //Explosion explosion = World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentdata<Explosion>();
         //Explosion explosion = World.DefaultGameObjectInjectionWorld.GetComponentDataFromEntity<Explosion>();
-
-        
-        // Instanciate a sphere from monobehaviour class SimulationHandler
-        //SimulationHandler.instance.SpawnSphere(0, 2, 2);
-        //explosion.power = 110f;
-        //Debug.Log("explosion power " + explosion.power);
-        //Debug.Log("explosion power " + explosion.sphere);
-        //Debug.Log("BOOM");
-        hasExplode = true;
-
-        // Get highest x-value and highest y-value
-        Debug.Log("Deep: " + SimulationHandler.instance.GetMaxDeep());
-        Debug.Log("Width: " + SimulationHandler.instance.GetMaxWidth());
-        
-        // 1. Spawn a sphere entity (TODO: In the middle of the cube structure)
-        Entities
-            .WithoutBurst()
-            .WithAll<SpawnerTag>()
-            .ForEach((Entity entity, int entityInQueryIndex, in Explosion explosion) =>
+   
+        if(!hasSphere)
         {
-            // with EntityManager
-            //var TheInstance = EntityManager.Instantiate(spawnerFromEntity.Prefab);
-            //EntityManager.SetComponentData(TheInstance, new Translation {Value = new float3(0, 0, 2)});
-            // Removes the spawner entity
-            //EntityManager.DestroyEntity(entity);
-            Debug.Log("This should only be printed out once");
-            var theInstance = ecb.Instantiate(explosion.Prefab);
-            ecb.SetComponent(theInstance, new Translation {Value = new float3(0, 0, 2)});
-            ecb.AddComponent(theInstance, new ExplodeTag());
-            //ecb.DestroyEntity(entity);
+            // 1. Spawn a sphere entity in the middle of the cube structure
+            Entities
+                .WithoutBurst()
+                .WithAll<SpawnerTag>()
+                .ForEach((Entity entity, int entityInQueryIndex, in Explosion explosion) =>
+            {
+                Debug.Log("This should only be printed out once");
+                var theInstance = ecb.Instantiate(explosion.Prefab);
+                ecb.SetComponent(theInstance, new Translation {Value = new float3((SimulationHandler.instance.GetMaxWidth()-1)/2, 0, (SimulationHandler.instance.GetMaxWidth()-1)/2)});
+                ecb.AddComponent(theInstance, new ExplodeTag());
+                ecb.AddComponent(theInstance, new Scale { Value = 1f } );
+                ecb.AddComponent(theInstance, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = physicsValue }, CollisionFilter.Default, Unity.Physics.Material.Default)});
+                hasSphere = true;
 
-            /*
+            }).Run(); 
+
+        }
+        // 2. If sphere exist make it grow
+        if(hasSphere)
+        {
             Entities
                 .WithoutBurst()
                 .WithAll<ExplodeTag>()
-                .ForEach((Entity entity, int entityInQueryIndex, ref Explosion spawnerFromEntity, in LocalToWorld location ) => {
+                .ForEach((Entity entity, ref Translation translation, ref Scale scale, ref PhysicsCollider collider) => 
+            { 
+                // Increase the size of the sphere and move it upwards so it's placed on the ground while growing
+                translation.Value.y = y;
+                float increase = 0.15f;
+                scale.Value += increase;
+                ecb.SetComponent(entity, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = scale.Value }, CollisionFilter.Default, Unity.Physics.Material.Default)});
+                y += (increase/2);
+                
+            }).Run();
 
-            });*/
-
-        }).Run(); 
-
-        // 2. Make the sphere grow
-
-        // 3. Instantiate the sphere entity in the middle of the cube structure
-        
-
-        // Calculate the middle of the structure of cubes
-
-        // Create a sphere entity (without any renderer and collider, this makes the enitity invisable and prevent it to collide with the cubes) 
-        // in the middle of the structure of cubes
-
-        // Set the position of the explosion the the sphere entitys position
-
-        // Set force on nearby objects. Defines a shpere on the given position. The method returns an array with all the colliders overlapping with the sphere.
-
-        // Add a explosion force on every object in the stated radius of the sphere object
-
-        // Add force on the colliders that has a collider
-
+        }
 
         // Remove the sphere entity
 

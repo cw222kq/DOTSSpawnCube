@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6561392195617827557}
   - component: {fileID: 6790947922895706501}
   - component: {fileID: -1673636440329473732}
+  - component: {fileID: 5027604884225515357}
   m_Layer: 0
   m_Name: CubeT
   m_TagString: Untagged
@@ -203,3 +204,16 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
+--- !u!65 &5027604884225515357
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142556543141956094}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
