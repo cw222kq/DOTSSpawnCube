@@ -6,7 +6,6 @@ using Unity.Physics;
 using Unity.Jobs;
 using Unity.Transforms;
 using SphereCollider = Unity.Physics.SphereCollider;
-//using Unity.Physics.Systems;
 
 [UpdateAfter(typeof(SimulationHandler))]
 public class ExplodeCubeSystem : SystemBase
@@ -14,88 +13,35 @@ public class ExplodeCubeSystem : SystemBase
     private float countdown;
     private float deelay = 5f;
     private bool hasExplode;
-    //[Inject] private ChangeCubeColorSystem changeCubeColorSystem;
-    //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
-    //private EntityManager entityManager;
     private float y = 0;
     private float physicsValue = 0.8f;
     private bool hasSphere;
-    private Entity sphere;
-    private Explosion explosion; // Works if setting the value first but does not work if getting the entity from explosion. The entity from explosion is null (?)
-    
-    // THIS WORKS TOGETHER WITH EXPLOSION AND EXPLOSIONAUTHORING
-    //BeginInitializationEntityCommandBufferSystem m_EntityCommandBufferSystem;
 
     BeginInitializationEntityCommandBufferSystem BufferSystem;
-
     EntityCommandBuffer Buffer;
 
-    //EntityCommandBuffer ecb;
-    
     protected override void OnCreate() 
     {   
-        //Debug.Log("in OnUpdate");
         countdown = deelay;
-        //entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-        // THIS WORKS TOGETHER WITH EXPLOSION AND EXPLOSIONAUTHORING
-        //m_EntityCommandBufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>(); //WORKS WITH WORKER THREADS
-
-
-        //ecb = new EntityCommandBuffer();
-
         BufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
-        //Buffer = BufferSystem.CreateCommandBuffer();
-        
-
     } 
     protected override void OnUpdate() 
     {
-        // THIS WORKS TOGETHER WITH EXPLOSION AND EXPLOSIONAUTHORING
-        //EntityCommandBuffer.Concurrent commandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(); //WORKS WITH WORKER THREADS
         Buffer = BufferSystem.CreateCommandBuffer();
         
-
-        //Debug.Log("in OnUpdate");
         if(!hasExplode) 
         {
             countdown -= Time.DeltaTime;
         }
         if(countdown <= 0f && !hasExplode) 
-        {
-            //Debug.Log("execute explode");
-            //Entities.ForEach((PhysicsCollider collider, ref Explosion explosion) => 
-            //{
-                
-                Explode(Buffer);
-                
-        
-                
-          //  }).WithoutBurst().Run();
+        {  
+            Explode(Buffer);
         }
-        /*if(hasExplode) {
-
-            Entities
-                .WithoutBurst()
-                .WithAll<ExplodeTag>()
-                .ForEach((Entity entity, ref Translation translation) => 
-            {
-                translation.Value = new float3(5, 5, 5); 
-                
-
-            }).Run();
-
-
-
-        }*/
-
-        
-        
+      
     }
 
     private void Explode(EntityCommandBuffer ecb)
     {   
-
         // Get reference to system and disable it
         //World.DefaultGameObjectInjectionWorld.GetExistingSystem<ChangeCubeColorSystem>().Enabled = false; makes unity and computer crash???!!!!
         // Get reference to componentData ?????
