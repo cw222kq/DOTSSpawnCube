@@ -4,16 +4,17 @@ using UnityEngine;
 [RequiresEntityConversion]
 public class ExplosionAuthoring : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
 {
-    public GameObject Prefab;
-    public bool hasExplode;
+    public GameObject spherePrefab;
+    public float spherePrefabYvalue;
     public float delay;
     public float countdown;
     public bool hasExplosionEntity;
+    public bool hasExplode;
 
     // Referenced prefabs have to be declared so that the conversion system knows about them ahead of time
     public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
     {
-        referencedPrefabs.Add(Prefab);
+        referencedPrefabs.Add(spherePrefab);
     }
 
     // Lets you convert the editor data representation to the entity optimal runtime representation
@@ -23,16 +24,14 @@ public class ExplosionAuthoring : MonoBehaviour, IDeclareReferencedPrefabs, ICon
         {
             // The referenced prefab will be converted due to DeclareReferencedPrefabs.
             // So here we simply map the game object to an entity reference to that prefab.
-            Prefab = conversionSystem.GetPrimaryEntity(Prefab),
-            hasExplode = hasExplode,
+            spherePrefab = conversionSystem.GetPrimaryEntity(spherePrefab),
+            spherePrefabYvalue = spherePrefabYvalue,
             delay = delay,
+            countdown = countdown,
             hasExplosionEntity = hasExplosionEntity,
-            countdown = countdown
+            hasExplode = hasExplode
         };
-
-        var sphereCollider = new Unity.Physics.SphereCollider();
-        Debug.Log(Prefab);
-        Debug.Log(spawnerData.Prefab);
+        // Add spawnerData at the entity
         dstManager.AddComponentData(entity, spawnerData);
     }
 }

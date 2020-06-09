@@ -10,7 +10,6 @@ using SphereCollider = Unity.Physics.SphereCollider;
 [UpdateAfter(typeof(SimulationHandler))]
 public class ExplodeCubeSystem : SystemBase
 {
-    private float y = 0; // Try to move this to the Explosion component
     Explosion explosion;
     BeginInitializationEntityCommandBufferSystem BufferSystem;
     EntityCommandBuffer Buffer;
@@ -57,7 +56,7 @@ public class ExplodeCubeSystem : SystemBase
                 .ForEach((Entity entity, int entityInQueryIndex, in Explosion explosion) =>
             {
                 Debug.Log("This should only be printed out once");
-                var theInstance = ecb.Instantiate(explosion.Prefab);
+                var theInstance = ecb.Instantiate(explosion.spherePrefab);
                 ecb.SetComponent(theInstance, new Translation {Value = new float3((SimulationHandler.instance.GetMaxWidth()-1)/2, 0, (SimulationHandler.instance.GetMaxWidth()-1)/2)});
                 ecb.AddComponent(theInstance, new ExplodeTag());
                 ecb.AddComponent(theInstance, new Scale { Value = 1f } );
@@ -80,18 +79,24 @@ public class ExplodeCubeSystem : SystemBase
                 .ForEach((Entity entity, ref Translation translation, ref Scale scale, ref PhysicsCollider collider) => 
             { 
                 // Increase the size of the sphere and move it upwards so it's placed on the ground while growing
-                translation.Value.y = y;
+                translation.Value.y = explosion.spherePrefabYvalue;
                 float increase = 0.15f;
                 scale.Value += increase;
                 // Increase the collider by setting the collider radius to the same value as the scale value
                 ecb.SetComponent(entity, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = scale.Value }, CollisionFilter.Default, Unity.Physics.Material.Default)});
-                y += (increase/2);
+                explosion.spherePrefabYvalue += (increase/2);
+
+                // If the radius of the sphere is equal to or bigger than the maximum width of the cube structure remove the sphere (i.e stop the explosion function)
+                if(scale.Value >= SimulationHandler.instance.GetMaxWidth())
+                {
+                    explosion.hasExplode = true;
+                    // Remove the sphere entity
+                    ecb.DestroyEntity(entity);      
+                }
                 
             }).Run();
 
         }
-
-        // Remove the sphere entity
 
     }
 
