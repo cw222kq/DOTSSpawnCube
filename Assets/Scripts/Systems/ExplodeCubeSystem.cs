@@ -10,32 +10,31 @@ using SphereCollider = Unity.Physics.SphereCollider;
 [UpdateAfter(typeof(SimulationHandler))]
 public class ExplodeCubeSystem : SystemBase
 {
-    private float countdown;
-    private float deelay = 5f;
-    private bool hasExplode;
-    private float y = 0;
-    private float physicsValue = 0.8f;
-    private bool hasSphere;
-
+    private float y = 0; // Try to move this to the Explosion component
+    Explosion explosion;
     BeginInitializationEntityCommandBufferSystem BufferSystem;
     EntityCommandBuffer Buffer;
 
     protected override void OnCreate() 
-    {   
-        countdown = deelay;
+    {  
+        // Set delay of the explosion
+        explosion.delay = 5f;
+        Debug.Log("explosion.hasExplosionEntity " + explosion.hasExplosionEntity);
+        explosion.countdown = explosion.delay;
         BufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
     } 
     protected override void OnUpdate() 
     {
-        Buffer = BufferSystem.CreateCommandBuffer();
+        Buffer = BufferSystem.CreateCommandBuffer(); 
         
-        if(!hasExplode) 
+        if(!explosion.hasExplode) 
         {
-            countdown -= Time.DeltaTime;
+            explosion.countdown -= Time.DeltaTime;
         }
-        if(countdown <= 0f && !hasExplode) 
+        if(explosion.countdown <= 0f && !explosion.hasExplode) 
         {  
             Explode(Buffer);
+           
         }
       
     }
@@ -49,7 +48,7 @@ public class ExplodeCubeSystem : SystemBase
         //Explosion explosion = World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentdata<Explosion>();
         //Explosion explosion = World.DefaultGameObjectInjectionWorld.GetComponentDataFromEntity<Explosion>();
    
-        if(!hasSphere)
+        if(!explosion.hasExplosionEntity)
         {
             // 1. Spawn a sphere entity in the middle of the cube structure
             Entities
@@ -62,14 +61,18 @@ public class ExplodeCubeSystem : SystemBase
                 ecb.SetComponent(theInstance, new Translation {Value = new float3((SimulationHandler.instance.GetMaxWidth()-1)/2, 0, (SimulationHandler.instance.GetMaxWidth()-1)/2)});
                 ecb.AddComponent(theInstance, new ExplodeTag());
                 ecb.AddComponent(theInstance, new Scale { Value = 1f } );
-                ecb.AddComponent(theInstance, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = physicsValue }, CollisionFilter.Default, Unity.Physics.Material.Default)});
-                hasSphere = true;
+                // Adding SphereCollider component
+                ecb.AddComponent(theInstance, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = 1f }, CollisionFilter.Default, Unity.Physics.Material.Default)});
+                //hasSphere = true;
+                
 
             }).Run(); 
 
+            explosion.hasExplosionEntity = true;
+            Debug.Log("explosion.hasExplosionEntity " + explosion.hasExplosionEntity);
         }
         // 2. If sphere exist make it grow
-        if(hasSphere)
+        if(explosion.hasExplosionEntity)
         {
             Entities
                 .WithoutBurst()
@@ -80,6 +83,7 @@ public class ExplodeCubeSystem : SystemBase
                 translation.Value.y = y;
                 float increase = 0.15f;
                 scale.Value += increase;
+                // Increase the collider by setting the collider radius to the same value as the scale value
                 ecb.SetComponent(entity, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = scale.Value }, CollisionFilter.Default, Unity.Physics.Material.Default)});
                 y += (increase/2);
                 

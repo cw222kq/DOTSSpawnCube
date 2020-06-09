@@ -5,9 +5,10 @@ using UnityEngine;
 public class ExplosionAuthoring : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
 {
     public GameObject Prefab;
-    public float power;
-    public float radius;
-    public float upforce;
+    public bool hasExplode;
+    public float delay;
+    public float countdown;
+    public bool hasExplosionEntity;
 
     // Referenced prefabs have to be declared so that the conversion system knows about them ahead of time
     public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
@@ -23,15 +24,15 @@ public class ExplosionAuthoring : MonoBehaviour, IDeclareReferencedPrefabs, ICon
             // The referenced prefab will be converted due to DeclareReferencedPrefabs.
             // So here we simply map the game object to an entity reference to that prefab.
             Prefab = conversionSystem.GetPrimaryEntity(Prefab),
-            power = power,
-            radius = radius,
-            upforce = upforce
+            hasExplode = hasExplode,
+            delay = delay,
+            hasExplosionEntity = hasExplosionEntity,
+            countdown = countdown
         };
 
         var sphereCollider = new Unity.Physics.SphereCollider();
         Debug.Log(Prefab);
         Debug.Log(spawnerData.Prefab);
         dstManager.AddComponentData(entity, spawnerData);
-        //dstManager.AddComponentData(entity, sphereCollider);
     }
 }
