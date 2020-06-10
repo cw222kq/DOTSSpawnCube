@@ -42,10 +42,6 @@ public class ExplodeCubeSystem : SystemBase
     {   
         // Get reference to system and disable it
         //World.DefaultGameObjectInjectionWorld.GetExistingSystem<ChangeCubeColorSystem>().Enabled = false; makes unity and computer crash???!!!!
-        // Get reference to componentData ?????
-        // World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentdata<Explosion>().sphere;
-        //Explosion explosion = World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentdata<Explosion>();
-        //Explosion explosion = World.DefaultGameObjectInjectionWorld.GetComponentDataFromEntity<Explosion>();
    
         if(!explosion.hasExplosionEntity)
         {

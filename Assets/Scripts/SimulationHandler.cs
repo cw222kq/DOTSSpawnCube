@@ -16,8 +16,6 @@ public class SimulationHandler : MonoBehaviour
     [SerializeField] private GameObject cubePrefab; // think this is suppose to be hold by the struct cube
     [SerializeField] public List<UnityEngine.Material> cubeMaterial = new List<UnityEngine.Material>();
     [SerializeField] public Mesh cubeMesh;
-    [SerializeField] public Mesh sphereMesh;
-    [SerializeField] public UnityEngine.Material sphereMaterial;
     [SerializeField] public int width;
     [SerializeField] public int deep;
     [SerializeField] public int height;
@@ -130,31 +128,8 @@ public class SimulationHandler : MonoBehaviour
         // Adding my own structs to the entity
         entityManager.AddComponentData(newCubeEntity, new Cube());
         entityManager.AddComponentData(newCubeEntity, new CubeColor());
-        //entityManager.AddComponentData(newCubeEntity, new Explosion());
         
     } 
-
-    public void SpawnSphere(float x, float y, float z)
-    {
-        Entity newSphereEntity = entityManager.Instantiate(sphereEntityPrefab);
-        //newCubeEntity.UnityEngine.Rendermesh.UnityEngine.Material.color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
-        entityManager.AddComponentData(newSphereEntity, new Translation 
-        {
-            Value = new float3(x, y, z) 
-        });
-
-        entityManager.SetSharedComponentData(newSphereEntity, new RenderMesh 
-        {
-            material = sphereMaterial,
-            mesh = sphereMesh
-        });
-
-        // Adding my own structs to the entity
-        //entityManager.AddComponentData(newSphereEntity, new Explosion());
-        
-    } 
-
-
     
 } 
 

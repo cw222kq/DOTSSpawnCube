@@ -17,7 +17,7 @@ public struct Cube : IComponentData
     //public float3 position;
     //[SerializeField] private List<string> cubeMaterial;
     //[SerializeField] private string[] names;
-
+    //[SerializeField] private Material cubeMaterial;
     //[SerializeField] private Mesh cubeMesh;
     //[SerializeField] DynamicBuffer<RenderMesh> mesh;
     //[SerializeField] DynamicBuffer<RenderMesh> mesh;
