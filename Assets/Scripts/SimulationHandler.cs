@@ -20,8 +20,7 @@ public class SimulationHandler : MonoBehaviour
     [SerializeField] public int deep;
     [SerializeField] public int height;
     private Entity cubeEntityPrefab; // think this is suppose to be hold by the struct cube
-    public Entity sphereEntityPrefab;
-
+  
     // Singleton
     public static SimulationHandler instance;
 
@@ -64,7 +63,6 @@ public class SimulationHandler : MonoBehaviour
         blobAssetStore = new BlobAssetStore();
         GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAssetStore);
         cubeEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(cubePrefab, settings);
-        sphereEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(spherePrefab, settings);
         ProcessUserInput();
     }
 
