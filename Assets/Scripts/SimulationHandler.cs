@@ -20,7 +20,7 @@ public class SimulationHandler : MonoBehaviour
     //[SerializeField] public int deep;
     //[SerializeField] public int height;
     //private Entity cubeEntityPrefab; // think this is suppose to be hold by the struct cube
-    private static Cube cube;
+    public bool spawnedCubes;
   
     // Singleton
     public static SimulationHandler instance;
@@ -73,7 +73,7 @@ public class SimulationHandler : MonoBehaviour
     {
         // Cleans up the memory so the next time the simulation is run it does not have the previous blobAssetStore left
         blobAssetStore.Dispose();
-    } */
+    } 
 
     
     // Start is called before the first frame update
@@ -97,11 +97,11 @@ public class SimulationHandler : MonoBehaviour
             // When 100 cubes has been built start the building on the next level
             heightCounter++;
 
-        } */
+        } 
 
       
     }
-/*
+
     private void SpawnCube(float x, float y, float z)
     {
         Entity newCubeEntity = entityManager.Instantiate(cubeEntityPrefab);
