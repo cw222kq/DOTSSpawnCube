@@ -270,6 +270,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 3e996678bb428981ea65c20956d02698, type: 2}
   - {fileID: 2100000, guid: bc2a66cb99ed1fb6fa219da7ec43b913, type: 2}
   cubeMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  spawnedCubes: 0
 --- !u!114 &565054758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,9 +565,9 @@ MonoBehaviour:
   cubePrefab: {fileID: 4543478592245891121, guid: 51eb3b68cf8270d45898be8a4f30990f,
     type: 3}
   numberOfCubes: 5
-  width: 2
-  deep: 2
-  height: 2
+  width: 10
+  deep: 10
+  height: 10
   heightCounter: 0
   totalCubeCounter: 0
   maxWidth: 0

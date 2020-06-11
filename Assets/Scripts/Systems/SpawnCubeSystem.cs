@@ -4,7 +4,8 @@ using Unity.Mathematics;
 using Unity.Rendering;
 using Unity.Physics;
 using Unity.Transforms;
-[UpdateAfter(typeof(SimulationHandler))]
+//[UpdateAfter(typeof(SimulationHandler))]
+[UpdateBefore(typeof(ExplodeCubeSystem))]
 public class SpawnCubeSystem : SystemBase
 {
     //[SerializeField] private List<UnityEngine.Material> cubeMaterial = new List<UnityEngine.Material>(); Investigate how to do with this ???

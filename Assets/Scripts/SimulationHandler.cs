@@ -7,7 +7,7 @@ using Unity.Transforms;
 using Unity.Rendering;
 using Unity.Mathematics;
 using UnityEngine.UI;
-
+[UpdateBefore(typeof(SpawnCubeSystem))]
 public class SimulationHandler : MonoBehaviour
 {
     // Works it draws the number of cubes that the user inputs in the numberOfCube field.
