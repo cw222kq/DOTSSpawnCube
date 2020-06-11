@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Rendering;
 /*[UpdateBefore(typeof(ExplodeCubeSystem))]
+[UpdateAfter(typeof(SpawnCubeSystem))]
 public class ChangeCubeColorSystem : SystemBase
 {
     private Unity.Mathematics.Random random;

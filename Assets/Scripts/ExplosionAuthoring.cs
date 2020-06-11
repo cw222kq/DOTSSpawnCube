@@ -20,7 +20,7 @@ public class ExplosionAuthoring : MonoBehaviour, IDeclareReferencedPrefabs, ICon
     // Lets you convert the editor data representation to the entity optimal runtime representation
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        var spawnerData = new Explosion
+        var spawnerData = new Explosion //TODO: Change name to explosionData!!!!!
         {
             // The referenced prefab will be converted due to DeclareReferencedPrefabs.
             // So here we simply map the game object to an entity reference to that prefab.

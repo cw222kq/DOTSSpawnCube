@@ -1,13 +1,14 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Rendering;
 using Unity.Physics;
-using Unity.Jobs;
+using Unity.Jobs; DELETE
 using Unity.Transforms;
 using SphereCollider = Unity.Physics.SphereCollider;
 
-[UpdateAfter(typeof(SimulationHandler))]
+//[UpdateAfter(typeof(SimulationHandler))] BEFORE THE SPAWNCUBESYSTEM EXISTED
+[UpdateAfter(typeof(SpawnCubeSystem))] OR LET THE SPAWNCUBESYSTEM ENABLE THIS SYSTEM IN THE END 
 public class ExplodeCubeSystem : SystemBase
 {
     Explosion explosion;
@@ -96,4 +97,4 @@ public class ExplodeCubeSystem : SystemBase
 
     }
 
-}
+}*/
