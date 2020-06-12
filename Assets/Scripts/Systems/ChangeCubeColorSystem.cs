@@ -2,7 +2,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Rendering;
-/*[UpdateBefore(typeof(ExplodeCubeSystem))]
+[UpdateBefore(typeof(ExplodeCubeSystem))]
 [UpdateAfter(typeof(SpawnCubeSystem))]
 public class ChangeCubeColorSystem : SystemBase
 {
@@ -14,14 +14,16 @@ public class ChangeCubeColorSystem : SystemBase
     }
     protected override void OnUpdate()
     {
-       Entities.ForEach((RenderMesh renderMesh, ref CubeColor color) => 
+        Entities
+            .WithoutBurst()
+            .ForEach((RenderMesh renderMesh, ref CubeColor color) => 
         {
-            //ChangeColors(renderMesh, color);
+            ChangeColors(renderMesh, color);
 
-        }).WithoutBurst().Run();
+        }).Run();
 
     }
-
+    // Randomize rgb values and set it to the entities material
     private void ChangeColors(RenderMesh renderMesh, CubeColor color) 
     {
         color.r = random.NextFloat(0f, 1f);
@@ -31,4 +33,4 @@ public class ChangeCubeColorSystem : SystemBase
         renderMesh.material.color = new Color(color.r, color.g, color.b);
     }
     
-}*/
+}

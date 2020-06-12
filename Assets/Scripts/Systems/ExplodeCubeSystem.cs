@@ -18,7 +18,6 @@ public class ExplodeCubeSystem : SystemBase
     {  
         // Set delay of the explosion
         explosion.delay = 3f;
-        Debug.Log("explosion.hasExplosionEntity " + explosion.hasExplosionEntity);
         explosion.countdown = explosion.delay;
         BufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
     } 
@@ -40,32 +39,32 @@ public class ExplodeCubeSystem : SystemBase
 
     private void Explode(EntityCommandBuffer ecb)
     {   
-        // Get reference to system and disable it
-        //World.DefaultGameObjectInjectionWorld.GetExistingSystem<ChangeCubeColorSystem>().Enabled = false; makes unity and computer crash???!!!!
-
         if(!explosion.hasExplosionEntity)
         {
-            // 1. Spawn a sphere entity in the middle of the cube structure
+            // Spawn a sphere entity in the middle of the cube structure
             Entities
                 .WithoutBurst()
                 .WithAll<SpawnerTag>()
                 .ForEach((Entity entity, int entityInQueryIndex, in Explosion explosion, in Cube cube) =>
             {
-                Debug.Log("This should only be printed out once");
                 var theInstance = ecb.Instantiate(explosion.spherePrefab);
+                // Set the position of the sphere entity to be placed in the middle of the cube structure
                 ecb.SetComponent(theInstance, new Translation {Value = new float3((cube.maxWidth-1)/2, 0, (cube.maxWidth-1)/2)});
+                // Add an ExplodeTag on the sphere entity so its possible to find it with the entities.foreach at the end of this explode method
                 ecb.AddComponent(theInstance, new ExplodeTag());
+                // Set the radius of the sphere 
                 ecb.AddComponent(theInstance, new Scale { Value = 1f } );
-                // Adding SphereCollider component
+                // Adding SphereCollider component and set the radius of it to the same as the sphere radius
                 ecb.AddComponent(theInstance, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = 1f }, CollisionFilter.Default, Unity.Physics.Material.Default)});
-                //hasSphere = true;
+                // Set the maxWidth of the cube so the entities.foreach at the end of this explode method can use this value
                 maxWidth = cube.maxWidth;   
 
             }).Run(); 
 
+            // Make sure that this if statement only gets executed once
             explosion.hasExplosionEntity = true;
         }
-        // 2. If sphere exist make it grow
+        // If sphere exist make it grow
         if(explosion.hasExplosionEntity)
         {
             Entities
@@ -77,14 +76,18 @@ public class ExplodeCubeSystem : SystemBase
                 translation.Value.y = explosion.spherePrefabYvalue;
                 float increase = 0.15f;
                 scale.Value += increase;
+                explosion.spherePrefabYvalue += (increase/2);
                 // Increase the collider by setting the collider radius to the same value as the scale value
                 ecb.SetComponent(entity, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = scale.Value }, CollisionFilter.Default, Unity.Physics.Material.Default)});
-                explosion.spherePrefabYvalue += (increase/2);
+                // When the radius of the sphere is equal to or more than the maxWidth of the cube the explosion ends
                 if(scale.Value >= maxWidth)
                 {
+                    // Set hasExplode to true so this explode method only gets executed once
                     explosion.hasExplode = true;
                     // Remove the sphere entity
-                    ecb.DestroyEntity(entity);      
+                    ecb.DestroyEntity(entity);  
+                    // Get a reference to the ChangeCubeColorSystem and disable it before the explosion occurs
+                    World.DefaultGameObjectInjectionWorld.GetExistingSystem<ChangeCubeColorSystem>().Enabled = false;   
                 }
                 
             }).Run();

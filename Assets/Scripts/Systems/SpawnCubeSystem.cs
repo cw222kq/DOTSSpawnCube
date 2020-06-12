@@ -4,12 +4,9 @@ using Unity.Mathematics;
 using Unity.Rendering;
 using Unity.Physics;
 using Unity.Transforms;
-//[UpdateAfter(typeof(SimulationHandler))]
 [UpdateBefore(typeof(ExplodeCubeSystem))]
 public class SpawnCubeSystem : SystemBase
 {
-    //[SerializeField] private List<UnityEngine.Material> cubeMaterial = new List<UnityEngine.Material>(); Investigate how to do with this ???
-    //[SerializeField] private Mesh cubeMesh; Investigate how to do with this ???
     BeginInitializationEntityCommandBufferSystem BufferSystem;
     EntityCommandBuffer Buffer;
      protected override void OnCreate() 
@@ -23,8 +20,6 @@ public class SpawnCubeSystem : SystemBase
         {
             ProcessUserInput();
             SpawnCube(Buffer); 
-            //Set spawedCubes to true so this method only get called once
-            //spawnedCubes = true;
         }
        
     }
@@ -49,7 +44,9 @@ public class SpawnCubeSystem : SystemBase
                         var theInstance = ecb.Instantiate(cube.cubePrefab);
                         // Set the x, y and z value 
                         ecb.SetComponent(theInstance, new Translation { Value = new float3(i, cube.heightCounter, j) });
-                        // Randomize the material
+                        // Add component CubeColor so the ChangeCubeColorSystem will work on the cubes
+                        ecb.AddComponent(theInstance, new CubeColor());
+                        // Randomize the material so the cubes will have different materials and can have different colors
                         ecb.SetSharedComponent(theInstance, new RenderMesh 
                         { 
                             material = SimulationHandler.instance.cubeMaterial[(int)UnityEngine.Random.Range(0, 10)],
@@ -57,16 +54,16 @@ public class SpawnCubeSystem : SystemBase
                         });
                     }   
                 }
-                // When maxWidth*maxDeep has been built start the building on the next level
+                // When the first level of cubes (maxWidth*maxDeep) has been built start the building on the next level (i.e adding +1 to the height (y value))
                 cube.heightCounter++;
             }
 
         }).Run();  
 
-        //Set spawedCubes to true so this method only get called once
+        //Set spawedCubes to true so the SpawnCube method only gets executed once
         SimulationHandler.instance.spawnedCubes = true;   
     }
-    private void ProcessUserInput() //THINK THAT THIS SHOULD BE STORED IN THE SIMULATIONHANDLER
+    private void ProcessUserInput()
     {
         Entities
             .WithoutBurst()
