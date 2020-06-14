@@ -238,7 +238,6 @@ GameObject:
   m_Component:
   - component: {fileID: 565054760}
   - component: {fileID: 565054756}
-  - component: {fileID: 565054758}
   m_Layer: 0
   m_Name: SimulationHandler
   m_TagString: Untagged
@@ -271,18 +270,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: bc2a66cb99ed1fb6fa219da7ec43b913, type: 2}
   cubeMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   spawnedCubes: 0
---- !u!114 &565054758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565054755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8db70512f9d47ceb3a56c79336814183, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &565054760
 Transform:
   m_ObjectHideFlags: 0
@@ -482,10 +469,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1368267318}
   - component: {fileID: 1368267317}
-  - component: {fileID: 1368267319}
   - component: {fileID: 1368267320}
   - component: {fileID: 1368267321}
   - component: {fileID: 1368267322}
+  - component: {fileID: 1368267319}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -529,7 +516,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1368267316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7041be90265ab37e8137d761c6a5b00, type: 3}
+  m_Script: {fileID: 11500000, guid: 8db70512f9d47ceb3a56c79336814183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 2071556487650657975, guid: 3f1d00ceb4886bfd9b8b854d92b7350f,
