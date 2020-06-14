@@ -17,21 +17,21 @@ public class ChangeCubeColorSystem : SystemBase
     {
         Entities
             .WithoutBurst()
-            .ForEach((RenderMesh renderMesh, ref CubeColor color) => 
+            .ForEach((RenderMesh renderMesh, ref Cube cubeColor) => 
         {
-            ChangeColors(renderMesh, color);
+            ChangeColors(renderMesh, cubeColor);
 
         }).Run();
 
     }
     // Randomize rgb values and set it to the entities material
-    private void ChangeColors(RenderMesh renderMesh, CubeColor color) 
+    private void ChangeColors(RenderMesh renderMesh, Cube cubeColor) 
     {
-        color.r = random.NextFloat(0f, 1f);
-        color.g = random.NextFloat(0f, 1f);
-        color.b = random.NextFloat(0f, 1f);
+        cubeColor.r = random.NextFloat(0f, 1f);
+        cubeColor.g = random.NextFloat(0f, 1f);
+        cubeColor.b = random.NextFloat(0f, 1f);
 
-        renderMesh.material.color = new Color(color.r, color.g, color.b);
+        renderMesh.material.color = new Color(cubeColor.r, cubeColor.g, cubeColor.b);
     }
     
 }

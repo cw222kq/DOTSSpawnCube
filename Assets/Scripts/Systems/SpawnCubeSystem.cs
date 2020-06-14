@@ -54,8 +54,8 @@ public class SpawnCubeSystem : SystemBase
                         var theInstance = ecb.Instantiate(cube.cubePrefab);
                         // Set the x, y and z value 
                         ecb.SetComponent(theInstance, new Translation { Value = new float3(i, spawner.heightCounter, j) });
-                        // Add component CubeColor so the ChangeCubeColorSystem will work on the cubes
-                        ecb.AddComponent(theInstance, new CubeColor());
+                        // Add component Cube so the ChangeCubeColorSystem will work on the cubes
+                        ecb.AddComponent(theInstance, new Cube());
                         // Randomize the material so the cubes will have different materials and can have different colors
                         ecb.SetSharedComponent(theInstance, new RenderMesh 
                         { 
