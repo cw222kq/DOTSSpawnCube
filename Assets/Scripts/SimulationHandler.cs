@@ -5,7 +5,7 @@ using Unity.Entities;
 [UpdateBefore(typeof(SpawnCubeSystem))]
 public class SimulationHandler : MonoBehaviour
 {
-    [SerializeField] public List<Material> cubeMaterial = new List<Material>(); // TODO: Change name to cubeMaterials
+    [SerializeField] public List<Material> cubeMaterials = new List<Material>(); 
     [SerializeField] public Mesh cubeMesh;
     public bool spawnedCubes; // TODO: Move this???
   
