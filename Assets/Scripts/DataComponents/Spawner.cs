@@ -8,10 +8,10 @@ public struct Spawner : IComponentData
     public int width;
     public int deep;
     public int height;
-    public int heightCounter;
-    public int totalCubeCounter;
-    public int maxWidth;
-    public int maxDeep;
-    public bool spawnedCubes;
+    [HideInInspector] public int heightCounter;
+    [HideInInspector] public int totalCubeCounter;
+    [HideInInspector] public int maxWidth;
+    [HideInInspector] public int maxDeep;
+    [HideInInspector] public bool spawnedCubes;
 
 }

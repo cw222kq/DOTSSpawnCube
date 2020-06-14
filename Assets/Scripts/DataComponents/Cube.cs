@@ -5,7 +5,7 @@ using Unity.Entities;
 public struct Cube : IComponentData
 {
     public Entity cubePrefab;
-    public float r;
-    public float g;
-    public float b;  
+    [HideInInspector] public float r;
+    [HideInInspector] public float g;
+    [HideInInspector] public float b;  
 }

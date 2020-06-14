@@ -12,8 +12,7 @@ public class ExplodeCubeSystem : SystemBase
     Explosion explosion;
     BeginInitializationEntityCommandBufferSystem BufferSystem;
     EntityCommandBuffer Buffer;
-    int maxWidth = 0;
-
+    
     protected override void OnCreate() 
     {   
         // Set delay of the explosion
@@ -64,9 +63,6 @@ public class ExplodeCubeSystem : SystemBase
                 ecb.AddComponent(theInstance, new Scale { Value = 1f } );
                 // Adding SphereCollider component and set the radius of it to the same as the sphere radius
                 ecb.AddComponent(theInstance, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = 1f }, CollisionFilter.Default, Unity.Physics.Material.Default)});
-                // Set the maxWidth of the cube so the entities.foreach at the end of this explode method can use this value
-                //maxWidth = cube.maxWidth;   
-                //maxWidth = spawner.maxWidth; 
 
             }).Run(); 
 
@@ -92,6 +88,7 @@ public class ExplodeCubeSystem : SystemBase
                 // If the radius of the sphere is equal to or more than the maxWidth of the cube the explosion ends
                 if(scale.Value >= (float)spawner.maxWidth)
                 {
+                    Debug.Log("translation.Value.y " + translation.Value.y);
                     // Set hasExplode to true so this explode method only gets executed once
                     explosion.hasExplode = true;
                     // Remove the sphere entity

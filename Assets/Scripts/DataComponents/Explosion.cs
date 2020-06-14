@@ -5,9 +5,9 @@ using Unity.Entities;
 public struct Explosion : IComponentData
 {
     public Entity spherePrefab;
-    public float spherePrefabYvalue;
-    public float delay;
-    public float countdown;
-    public bool hasExplosionEntity;
-    public bool hasExplode;
+    [HideInInspector] public float spherePrefabYvalue;
+    [HideInInspector] public float delay;
+    [HideInInspector] public float countdown;
+    [HideInInspector] public bool hasExplosionEntity;
+    [HideInInspector] public bool hasExplode;
 }
