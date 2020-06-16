@@ -51,7 +51,7 @@ public class ExplodeCubeSystem : SystemBase
                 var theInstance = ecb.Instantiate(explosion.spherePrefab);
                 // Set the position of the sphere entity to be placed in the middle of the cube structure
                 //ecb.SetComponent(theInstance, new Translation {Value = new float3((cube.maxWidth-1)/2, 0, (cube.maxDeep-1)/2)});
-                ecb.SetComponent(theInstance, new Translation {Value = new float3((spawner.maxWidth-1)/2, 0, (spawner.maxDeep-1)/2)});
+                ecb.SetComponent(theInstance, new Translation {Value = new float3(((float)spawner.maxWidth-1)/2, 0, ((float)spawner.maxDeep-1)/2)});
 
                 // Add an Spawner on the sphere entity so its possible to get the maxWidth in the entities.foreach at the end of this explode method
                 ecb.AddComponent(theInstance, new Spawner { maxWidth = spawner.maxWidth, maxDeep = spawner.maxDeep });
@@ -80,15 +80,17 @@ public class ExplodeCubeSystem : SystemBase
             { 
                 // Increase the size of the sphere and move it upwards so it's placed on the ground while growing
                 translation.Value.y = explosion.spherePrefabYvalue;
-                float increase = 0.15f; //TODO: Change name to increaseValue
-                scale.Value += increase;
-                explosion.spherePrefabYvalue += (increase/2);
-                // Increase the collider by setting the collider radius to the same value as the scale value
+                float increaseValue = 0.15f;
+                scale.Value += increaseValue;
+                explosion.spherePrefabYvalue += (increaseValue/2);
+                // Increase the collider by setting the collider radius to the same value as the scale value. This makes the collider twice as big as the sphere.
                 ecb.SetComponent(entity, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = scale.Value }, CollisionFilter.Default, Unity.Physics.Material.Default)});
+        
                 // If the radius of the sphere is equal to or more than the maxWidth of the cube the explosion ends
                 if(scale.Value >= (float)spawner.maxWidth)
                 {
-                    Debug.Log("translation.Value.y " + translation.Value.y);
+                    //Debug.Log("scale.Value: " + scale.Value + " Collider radius: " + GetComponentDataFromEntity<SphereGeometry>(false));
+                    Debug.Log(collider.Value);
                     // Set hasExplode to true so this explode method only gets executed once
                     explosion.hasExplode = true;
                     // Remove the sphere entity
