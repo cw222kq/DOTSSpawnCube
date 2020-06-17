@@ -89,8 +89,6 @@ public class ExplodeCubeSystem : SystemBase
                 // If the radius of the sphere is equal to or more than the maxWidth of the cube the explosion ends
                 if(scale.Value >= (float)spawner.maxWidth)
                 {
-                    //Debug.Log("scale.Value: " + scale.Value + " Collider radius: " + GetComponentDataFromEntity<SphereGeometry>(false));
-                    Debug.Log(collider.Value);
                     // Set hasExplode to true so this explode method only gets executed once
                     explosion.hasExplode = true;
                     // Remove the sphere entity

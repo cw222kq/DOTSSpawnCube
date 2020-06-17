@@ -7,7 +7,6 @@ public class SimulationHandler : MonoBehaviour
 {
     [SerializeField] public List<Material> cubeMaterials = new List<Material>(); 
     [SerializeField] public Mesh cubeMesh;
-    public bool spawnedCubes; // TODO: Move this???
   
     // Singleton
     public static SimulationHandler instance;

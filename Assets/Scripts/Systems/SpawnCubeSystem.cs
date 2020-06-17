@@ -10,7 +10,7 @@ public class SpawnCubeSystem : SystemBase
 {
     BeginInitializationEntityCommandBufferSystem BufferSystem;
     EntityCommandBuffer Buffer;
-    //Spawner spawner;
+    Spawner spawner;
 
      protected override void OnCreate() 
     {
@@ -20,16 +20,12 @@ public class SpawnCubeSystem : SystemBase
     protected override void OnUpdate() 
     {
         Buffer = BufferSystem.CreateCommandBuffer(); 
-        if (!SimulationHandler.instance.spawnedCubes)
+    
+        if (!spawner.spawnedCubes)
         {
             ProcessUserInput();
             SpawnCube(Buffer); 
         }
-        /*if (!spawner.spawnedCubes)
-        {
-            ProcessUserInput();
-            SpawnCube(Buffer); 
-        }*/
        
     }
 
@@ -71,8 +67,7 @@ public class SpawnCubeSystem : SystemBase
         }).Run();  
 
         //Set spawedCubes to true so the SpawnCube method only gets executed once
-        SimulationHandler.instance.spawnedCubes = true;  
-        //spawner.spawnedCubes = true; 
+        spawner.spawnedCubes = true; 
     }
     
     private void ProcessUserInput()
