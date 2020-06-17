@@ -3,13 +3,10 @@ using UnityEngine;
 using Unity.Entities;
 
 [UpdateBefore(typeof(SpawnCubeSystem))]
-public class SimulationHandler : MonoBehaviour
+public class MaterialHandler : MonoBehaviour
 {
     [SerializeField] public List<Material> cubeMaterials = new List<Material>(); 
-    [SerializeField] public Mesh cubeMesh;
-  
-    // Singleton
-    public static SimulationHandler instance;
+    public static MaterialHandler instance;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -19,6 +16,4 @@ public class SimulationHandler : MonoBehaviour
         }
         instance = this;
     }
-    
-} 
-
+}

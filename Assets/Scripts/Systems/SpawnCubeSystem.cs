@@ -55,8 +55,8 @@ public class SpawnCubeSystem : SystemBase
                         // Randomize the material so the cubes will have different materials and can have different colors
                         ecb.SetSharedComponent(theInstance, new RenderMesh 
                         { 
-                            material = SimulationHandler.instance.cubeMaterials[(int)UnityEngine.Random.Range(0, 10)],
-                            mesh = SimulationHandler.instance.cubeMesh 
+                            material = MaterialHandler.instance.cubeMaterials[(int)UnityEngine.Random.Range(0, 10)],
+                            mesh = MeshHandler.instance.cubeMesh
                         });
                     }   
                 }
