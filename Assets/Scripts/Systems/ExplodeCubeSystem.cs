@@ -45,22 +45,23 @@ public class ExplodeCubeSystem : SystemBase
             Entities
                 .WithoutBurst()
                 .WithAll<SpawnerTag>()
-                .ForEach((Entity entity, int entityInQueryIndex, in Explosion explosion, in Cube cube, in Spawner spawner) =>
+                .ForEach((Entity entity, int entityInQueryIndex, in Explosion explosion, in Spawner spawner) =>
             {
                 // Instantiate the sphere entity
                 var theInstance = ecb.Instantiate(explosion.spherePrefab);
+
                 // Set the position of the sphere entity to be placed in the middle of the cube structure
-                //ecb.SetComponent(theInstance, new Translation {Value = new float3((cube.maxWidth-1)/2, 0, (cube.maxDeep-1)/2)});
                 ecb.SetComponent(theInstance, new Translation {Value = new float3(((float)spawner.maxWidth-1)/2, 0, ((float)spawner.maxDeep-1)/2)});
 
                 // Add an Spawner on the sphere entity so its possible to get the maxWidth in the entities.foreach at the end of this explode method
                 ecb.AddComponent(theInstance, new Spawner { maxWidth = spawner.maxWidth, maxDeep = spawner.maxDeep });
 
-
                 // Add an ExplodeTag on the sphere entity so its possible to find it with the entities.foreach at the end of this explode method
                 ecb.AddComponent(theInstance, new ExplodeTag());
+
                 // Set the radius of the sphere 
                 ecb.AddComponent(theInstance, new Scale { Value = 1f } );
+
                 // Adding SphereCollider component and set the radius of it to the same as the sphere radius
                 ecb.AddComponent(theInstance, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = 1f }, CollisionFilter.Default, Unity.Physics.Material.Default)});
 
