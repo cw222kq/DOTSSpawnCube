@@ -27,12 +27,12 @@ public class SpawnCubeSystem : SystemBase
         if (!spawner.spawnedCubes)
         {
             ProcessUserInput();
-            SpawnCube(Buffer); 
+            SpawnCubes(Buffer); 
         }
        
     }
 
-    private void SpawnCube(EntityCommandBuffer ecb) // TODO: Change name to SpawnCubes
+    private void SpawnCubes(EntityCommandBuffer ecb) // TODO: Change name to SpawnCubes
     {
         // This code will run on each entity with a SpawnerTag (i.e only the Spawner entity in the scene). 
         Entities
