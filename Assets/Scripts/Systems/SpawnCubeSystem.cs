@@ -32,7 +32,7 @@ public class SpawnCubeSystem : SystemBase
        
     }
 
-    private void SpawnCubes(EntityCommandBuffer ecb) // TODO: Change name to SpawnCubes
+    private void SpawnCubes(EntityCommandBuffer ecb)
     {
         // This code will run on each entity with a SpawnerTag (i.e only the Spawner entity in the scene). 
         Entities
@@ -53,7 +53,7 @@ public class SpawnCubeSystem : SystemBase
 
                         spawner.totalCubeCounter++;
 
-                        // Instantiate entity 
+                        // Instantiate Entity 
                         var theInstance = ecb.Instantiate(cube.cubePrefab);
 
                         // Set the x, y and z value for the entity

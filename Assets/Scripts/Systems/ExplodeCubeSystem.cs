@@ -88,13 +88,13 @@ public class ExplodeCubeSystem : SystemBase
             { 
                 // Increase the size of the sphere and move it upwards so it will result in an up force of the explosion
                 translation.Value.y = explosion.spherePrefabYvalue;
-
+                
                 // Set the value that the scale will increase within every round in the loop
                 float increaseValue = 0.15f;
                 scale.Value += increaseValue;
 
                 // Set the value that the y position of the sphere will increase within every round in the loop
-                explosion.spherePrefabYvalue += (increaseValue/2);
+                explosion.spherePrefabYvalue += increaseValue;
 
                 // Increase the collider by setting the collider radius to the same value as the scale value (this makes the collider twice as big as the sphere).
                 ecb.SetComponent(entity, new PhysicsCollider { Value = SphereCollider.Create(new SphereGeometry { Center = float3.zero, Radius = scale.Value }, CollisionFilter.Default, Unity.Physics.Material.Default)});
