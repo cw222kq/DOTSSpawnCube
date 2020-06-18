@@ -15,6 +15,7 @@ public class ChangeCubeColorSystem : SystemBase
     }
     protected override void OnUpdate()
     {
+        // The ChangeColors method is run on every entity that holds both the RenderMesh and the Cube component
         Entities
             .WithoutBurst()
             .ForEach((RenderMesh renderMesh, ref Cube cubeColor) => 
