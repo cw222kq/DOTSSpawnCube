@@ -26,7 +26,7 @@ public class ChangeCubeColorSystem : SystemBase
 
     }
     // Randomize rgb values and set it to the entities material
-    private void ChangeColors(RenderMesh renderMesh, Cube cubeColor) 
+    private void ChangeColors(RenderMesh renderMesh, Cube cubeColor) // TODO: Change and set the Entities foreach in the method
     {
         cubeColor.r = random.NextFloat(0f, 1f);
         cubeColor.g = random.NextFloat(0f, 1f);

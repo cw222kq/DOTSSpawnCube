@@ -89,7 +89,7 @@ public class SpawnCubeSystem : SystemBase
         Entities
             .WithoutBurst()
             .WithAll<SpawnerTag>()
-            .ForEach((Entity entity, int entityInQueryIndex, ref Spawner spawner) =>
+            .ForEach((Entity entity, int entityInQueryIndex, ref Spawner spawner) => // TODO: Remove entityInQueryIndex
         {
             // Default value if the user only input the numberOfCubes
             spawner.maxDeep = 10;
