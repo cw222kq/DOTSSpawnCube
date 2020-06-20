@@ -467,10 +467,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 2071556487650657975, guid: 3f1d00ceb4886bfd9b8b854d92b7350f,
     type: 3}
-  spherePrefabYvalue: 0
   delay: 0
   countdown: 0
   hasExplosionEntity: 0
+  spherePrefabYvalue: 0
   hasExplode: 0
 --- !u!114 &1368267320
 MonoBehaviour:

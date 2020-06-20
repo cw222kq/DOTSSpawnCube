@@ -8,4 +8,5 @@ public struct Cube : IComponentData
     [HideInInspector] public float r;
     [HideInInspector] public float g;
     [HideInInspector] public float b;  
+
 }
