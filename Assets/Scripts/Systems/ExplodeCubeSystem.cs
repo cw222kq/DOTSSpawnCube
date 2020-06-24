@@ -28,12 +28,8 @@ public class ExplodeCubeSystem : SystemBase
         // Create EntityCommandBuffer so it's possible to add components to entities as well as modify components on entities
         Buffer = BufferSystem.CreateCommandBuffer(); 
         
-        // If the explosion has not occurred the system will count down
-        if(!explosion.hasExplode) 
-        {
-            explosion.countdown -= Time.DeltaTime;
-        }
-
+        explosion.countdown -= Time.DeltaTime;
+       
         // If the countdown is 0 or less the Explode method will be called
         if(explosion.countdown <= 0f && !explosion.hasExplode) 
         {  
