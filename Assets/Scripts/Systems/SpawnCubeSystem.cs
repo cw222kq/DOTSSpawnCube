@@ -87,7 +87,6 @@ public class SpawnCubeSystem : SystemBase
     private void ProcessUserInput()
     {
         Entities
-            .WithoutBurst()
             .WithAll<SpawnerTag>()
             .ForEach((Entity entity, ref Spawner spawner) => 
         {
