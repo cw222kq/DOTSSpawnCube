@@ -7,8 +7,8 @@ public class EndSimulationSystem : SystemBase
 
     protected override void OnCreate() 
     {
-        // End simulation after 45 seconds
-        simulation.endSimulationTimer = 45f;
+        // End simulation after 40 seconds
+        simulation.endSimulationTimer = 40f;
     }
     protected override void OnUpdate()
     {
