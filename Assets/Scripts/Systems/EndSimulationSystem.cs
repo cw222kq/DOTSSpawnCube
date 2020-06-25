@@ -17,7 +17,6 @@ public class EndSimulationSystem : SystemBase
         // 45 seconds after start end the simulation
         if (simulation.endSimulationTimer <= 0f)
         {
-            Debug.Log("QUIT!!!!!!");
             Application.Quit();
         }
     }
