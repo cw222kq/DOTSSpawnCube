@@ -4,5 +4,5 @@ using Unity.Entities;
 [GenerateAuthoringComponent] 
 public struct Simulation : IComponentData
 {
-   public float endSimulationTimer;
+   public int framesCounter;
 }

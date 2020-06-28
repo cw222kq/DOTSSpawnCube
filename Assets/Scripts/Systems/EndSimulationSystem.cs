@@ -7,15 +7,15 @@ public class EndSimulationSystem : SystemBase
 
     protected override void OnCreate() 
     {
-        // End simulation after 40 seconds
-        simulation.endSimulationTimer = 40f;
+        // Initialize framesCounter
+        simulation.framesCounter = 1;
     }
     protected override void OnUpdate()
     {
-        simulation.endSimulationTimer -= Time.DeltaTime;
+        simulation.framesCounter ++;
 
-        // 45 seconds after start end the simulation
-        if (simulation.endSimulationTimer <= 0f)
+        // When the frames reach 600 end the simulation
+        if (simulation.framesCounter == 600)
         {
             Application.Quit();
         }
