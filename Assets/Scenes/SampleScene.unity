@@ -396,13 +396,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.014231529, y: 0.6426767, z: -0.011941674, w: -0.7659122}
-  m_LocalPosition: {x: 40, y: 1, z: 3}
+  m_LocalRotation: {x: -0.1330222, y: 0.6330223, z: -0.111618906, w: -0.75440645}
+  m_LocalPosition: {x: 60, y: 30, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 2.129, y: 280, z: 0}
+  m_LocalEulerAnglesHint: {x: 20, y: 280, z: 0}
 --- !u!1 &1368267316
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +516,7 @@ MonoBehaviour:
   numberOfCubes: 10
   width: 10
   deep: 10
-  height: 10
+  height: 30
   heightCounter: 0
   totalCubeCounter: 0
   maxWidth: 0
